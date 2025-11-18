@@ -1,6 +1,9 @@
 """
 Apify Actor - Main entry point
 """
+
+from datetime import datetime, timezone
+
 from apify import Actor
 
 
@@ -13,30 +16,30 @@ async def main():
         actor_input = await Actor.get_input() or {}
 
         # Log the input
-        Actor.log.info('Actor input:', extra={'input': actor_input})
+        Actor.log.info("Actor input:", extra={"input": actor_input})
 
         # TODO: Implement your actor logic here
         # Example: Extract configuration from input
-        start_url = actor_input.get('startUrl', 'https://example.com')
-        max_items = actor_input.get('maxItems', 10)
+        start_url = actor_input.get("startUrl", "https://example.com")
+        max_items = actor_input.get("maxItems", 10)
 
-        Actor.log.info(f'Processing URL: {start_url}')
+        Actor.log.info(f"Processing URL: {start_url}")
 
         # TODO: Process the input and extract data
         # Example: Push results to dataset
         results = []
         for i in range(max_items):
-            results.append({
-                'index': i,
-                'url': start_url,
-                'timestamp': Actor.now().isoformat()
-            })
+            results.append(
+                {"index": i, "url": start_url, "timestamp": datetime.now(timezone.utc).isoformat()}
+            )
 
         # Push data to the default dataset
         await Actor.push_data(results)
 
-        Actor.log.info(f'Successfully processed {len(results)} items')
+        Actor.log.info(f"Successfully processed {len(results)} items")
 
 
-if __name__ == '__main__':
-    Actor.main(main)
+if __name__ == "__main__":
+    import asyncio
+
+    asyncio.run(main())

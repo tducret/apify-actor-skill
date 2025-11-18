@@ -78,6 +78,18 @@ while request := await queue.fetch_next_request():
 
 ## Web Scraping
 
+**Install scraping libraries as needed:**
+
+```bash
+uv add [DEPENDENCY]
+```
+
+After adding dependencies, verify the Docker build:
+
+```bash
+docker build .
+```
+
 ### Using HTTP Requests (httpx or curl-cffi)
 
 ```python

@@ -17,6 +17,20 @@ Standby mode allows actors to run as persistent HTTP servers, providing instant 
 - Memory-intensive processing
 - Tasks that take >30 seconds per request
 
+## Prerequisites
+
+Standby mode requires the `aiohttp` library for the web server. Add it to your project:
+
+```bash
+uv add aiohttp
+```
+
+After adding dependencies, verify the Docker build works:
+
+```bash
+docker build .
+```
+
 ## Basic Implementation
 
 ### Dual-Mode Actor
@@ -137,7 +151,9 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
-    Actor.main(main)
+    import asyncio
+
+    asyncio.run(main())
 ```
 
 ## Making Requests to Standby Actors
@@ -427,8 +443,9 @@ async def handle_standby_request(request: web.Request) -> web.Response:
     result = await process_webhook(data)
 
     # Optionally save to dataset for later analysis
+    from datetime import datetime, timezone
     await Actor.push_data({
-        "timestamp": Actor.now().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "data": data,
         "result": result
     })
