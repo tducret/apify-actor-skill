@@ -1,0 +1,64 @@
+name: Package Skill
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Package skill
+        run: |
+          cd apify-actor
+          zip -r ../apify-actor.zip .
+          cd ..
+
+      - name: Verify package structure
+        run: |
+          echo "Verifying package structure..."
+          unzip -l apify-actor.zip | head -20
+
+          # Check that SKILL.md exists in the root of the zip
+          if unzip -l apify-actor.zip | grep -q "SKILL.md"; then
+            echo "✓ SKILL.md found in package"
+          else
+            echo "✗ SKILL.md not found in package root"
+            exit 1
+          fi
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: apify-actor.zip
+          body: |
+            ## Apify Actor Development Skill
+
+            Download `apify-actor.zip` and install it in Claude:
+
+            1. Go to [claude.ai](https://claude.ai)
+            2. Navigate to Settings > Capabilities
+            3. Upload the `apify-actor.zip` file
+            4. Enable the skill
+
+            See the [README](https://github.com/${{ github.repository }}) for full documentation.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifact
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: apify-actor-skill
+          path: apify-actor.zip
+          retention-days: 90

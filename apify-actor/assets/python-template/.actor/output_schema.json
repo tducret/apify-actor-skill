@@ -1,0 +1,13 @@
+{
+    "actorOutputSchemaVersion": 1,
+    "title": "Actor Results",
+    "description": "Results from the actor run",
+    "properties": {
+        "results": {
+            "type": "string",
+            "title": "📊 Results Dataset",
+            "description": "Dataset containing all scraped items",
+            "template": "{{links.apiDefaultDatasetUrl}}/items"
+        }
+    }
+}

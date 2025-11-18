@@ -1,0 +1,270 @@
+<div align="center">
+  <img src="logo.png" alt="Apify Actor Skill Logo" width="400"/>
+</div>
+
+A comprehensive skill for Claude Code that enables creating, developing, modifying, debugging, and deploying Apify actors for web scraping and automation.
+
+## What This Skill Does
+
+This skill provides Claude Code with deep knowledge and templates for building Apify actors, including:
+
+- Creating new actors from templates
+- Implementing web scraping logic with Python
+- Configuring input/output schemas
+- Writing marketplace documentation
+- Debugging and deploying actors
+- Implementing standby mode for real-time APIs
+- Best practices for performance and security
+
+## Prerequisites
+
+Before using this skill, you need:
+
+1. **Claude Account** - Sign up at [claude.ai](https://claude.ai)
+2. **Apify CLI** (optional but recommended) - The skill can guide Claude to install this:
+   ```bash
+   brew install apify-cli  # macOS
+   # or: npm install -g apify-cli
+   ```
+3. **Apify Account** - Sign up at [apify.com](https://www.apify.com?fpr=dx0tf8)
+
+## Installation
+
+### Method 1: Download from Releases (Recommended)
+
+1. Go to the [Releases page](https://github.com/tducret/apify-actor-skill/releases)
+2. Download the latest `apify-actor.zip` file
+3. Install in Claude:
+   - Go to [claude.ai](https://claude.ai) or in your Claude desktop app
+   - Navigate to Settings > Capabilities
+   - Click "Upload Skill" or similar option
+   - Select the downloaded `apify-actor.zip` file
+   - Enable the skill in your capabilities list
+
+### Method 2: Build from Source
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/tducret/apify-actor-skill.git
+   cd apify-actor-skill
+   ```
+
+2. Package the skill:
+   ```bash
+   cd apify-actor
+   zip -r ../apify-actor.zip .
+   cd ..
+   ```
+
+3. Install in Claude:
+   - Go to [claude.ai](https://claude.ai)
+   - Navigate to Settings > Capabilities
+   - Upload the `apify-actor.zip` file
+   - Enable the skill
+
+## How to Use
+
+Once installed, the skill activates automatically when you ask Claude about Apify-related tasks:
+
+### Creating a New Actor
+
+```
+Create a new Apify actor that scrapes product listings from e-commerce sites
+```
+
+Claude will:
+- Guide you through using `apify create` or copy from templates
+- Set up the proper project structure
+- Implement scraping logic
+- Configure input/output schemas
+- Write marketplace documentation
+
+### Modifying an Existing Actor
+
+```
+Add proxy support and retry logic to my actor
+```
+
+Claude will:
+- Read your existing actor code
+- Implement the requested features
+- Update schemas if needed
+- Test the changes locally
+
+### Debugging Issues
+
+```
+My actor is timing out when scraping large sites. Help me debug this.
+```
+
+Claude will:
+- Analyze your actor code
+- Identify performance bottlenecks
+- Suggest optimizations
+- Implement batching or pagination
+
+### Deploying Actors
+
+```
+Deploy my actor to Apify platform
+```
+
+Claude will:
+- Test locally first with `apify run`
+- Push to platform with `apify push`
+- Guide you through platform configuration
+
+## Project Structure
+
+```
+apify-actor-skill/
+├── apify-actor/              # The skill package
+│   ├── SKILL.md              # Main skill documentation
+│   ├── assets/               # Templates and resources
+│   │   └── python-template/  # Minimal Python actor template
+│   └── references/           # Detailed documentation
+│       ├── python-sdk.md     # SDK patterns and examples
+│       ├── standby-mode.md   # Real-time API implementation
+│       ├── input-schema.md   # Input configuration
+│       └── output-schema.md  # Output configuration
+├── .claude/
+│   └── settings.local.json   # Permissions configuration
+└── README.md                 # This file
+```
+
+## Automated Releases
+
+This repository includes a GitHub Action that automatically packages the skill:
+
+- **On tag push**: Creates a GitHub release with the packaged `apify-actor.zip`
+- **Manual trigger**: Can be run manually from the Actions tab
+- **Artifact upload**: Non-tagged builds upload the zip as an artifact
+
+To create a new release:
+```bash
+git tag -a v1.0.0 -m "Release version 1.0.0"
+git push origin v1.0.0
+```
+
+## Features
+
+### Templates
+
+The skill includes a minimal Python actor template in `assets/python-template/` with:
+- Basic project structure
+- Input/output schema examples
+- Docker configuration
+- Pre-commit hooks setup
+- Comprehensive ACTOR.md documentation template
+
+### Reference Documentation
+
+Detailed guides in `references/`:
+- **python-sdk.md** - Complete SDK examples (HTTP scraping, browser automation, crawling)
+- **standby-mode.md** - Real-time API patterns for instant responses
+- **input-schema.md** - Input validation and UI configuration
+- **output-schema.md** - Output configuration and data access templates
+
+### Best Practices
+
+The skill guides Claude to follow Apify best practices:
+- Input validation with clear error messages
+- Structured logging for debugging
+- Batch processing for performance
+- Proxy usage for reliability
+- Security (no hardcoded secrets, non-root execution)
+- Comprehensive marketplace documentation
+
+## Examples
+
+### Example 1: Simple HTTP Scraper
+
+```
+Create an actor that scrapes article titles and links from a news website
+```
+
+Claude will create a complete actor with:
+- BeautifulSoup-based scraping
+- Configurable URL input
+- Structured output to dataset
+- Error handling and logging
+
+### Example 2: Browser Automation
+
+```
+Build an actor that takes screenshots of websites using Playwright
+```
+
+Claude will:
+- Set up Playwright with Python
+- Configure browser options
+- Implement screenshot capture
+- Save to key-value store
+- Add proxy support
+
+### Example 3: Standby Mode API
+
+```
+Convert my scraper to standby mode for real-time API access
+```
+
+Claude will:
+- Implement persistent HTTP server
+- Add API endpoints
+- Configure standby settings
+- Provide usage examples
+- Optimize for low latency
+
+## Troubleshooting
+
+### Skill Not Activating
+
+If Claude doesn't recognize Apify commands:
+- Verify the skill is installed (Settings > Skills)
+- Try mentioning "Apify" explicitly in your request
+- Check that `SKILL.md` has the correct trigger keywords
+
+### Permission Errors
+
+If you get permission errors:
+- Check `.claude/settings.local.json`
+- Add required permissions to the "allow" list
+- Restart Claude Code
+
+### CLI Not Found
+
+If `apify` command is not found:
+- Install Apify CLI: `brew install apify-cli`
+- Or ask Claude: "Install the Apify CLI"
+- Verify installation: `apify --version`
+
+## Contributing
+
+To contribute improvements:
+
+1. Fork this repository
+2. Make your changes to `apify-actor/SKILL.md` or reference docs
+3. Test with Claude Code
+4. Submit a pull request
+
+## Documentation Updates
+
+The skill references official Apify documentation at `https://docs.apify.com/llms.txt` for the latest information. If you need features not covered by the skill, Claude can fetch current docs automatically.
+
+## License
+
+MIT License - See LICENSE file for details
+
+## Resources
+
+- [Apify Documentation](https://docs.apify.com)
+- [Apify Python SDK](https://docs.apify.com/sdk/python)
+- [Claude Code Documentation](https://code.claude.com/docs)
+- [Skill Creator Guide](https://code.claude.com/docs/skills)
+
+## Support
+
+For issues with:
+- **This skill**: Open an issue in this repository
+- **Claude Code**: Visit [code.claude.com/support](https://code.claude.com/support)
+- **Apify platform**: Visit [help.apify.com](https://help.apify.com)
