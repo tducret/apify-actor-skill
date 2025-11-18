@@ -62,6 +62,27 @@ Before using this skill, you need:
    - Upload the `apify-actor.zip` file
    - Enable the skill
 
+### Method 3: Claude Code CLI
+
+1. Create the skills directory (if it doesn't exist):
+   ```bash
+   mkdir -p ~/.claude/skills
+   ```
+
+2. Clone this repository:
+   ```bash
+   git clone https://github.com/tducret/apify-actor-skill.git ~/github/apify-actor-skill
+   ```
+
+3. Create a symbolic link to the skill:
+   ```bash
+   ln -s ~/github/apify-actor-skill/apify-actor ~/.claude/skills/apify-actor
+   ```
+
+4. Restart Claude Code CLI to load the skill
+
+The skill will now be available in your Claude Code CLI sessions and will activate automatically when working with Apify-related tasks.
+
 ## How to Use
 
 Once installed, the skill activates automatically when you ask Claude about Apify-related tasks:
