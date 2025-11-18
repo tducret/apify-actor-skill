@@ -101,6 +101,32 @@ uv sync --upgrade
 
 The template already uses `uv sync --frozen --no-dev` in the Dockerfile. Never modify this to use pip.
 
+### Docker Build Verification (MANDATORY)
+
+**ALWAYS verify the Docker build works after:**
+- Initial actor creation
+- Adding new dependencies with `uv add`
+
+```bash
+# Build the Docker image locally
+docker build .
+
+# Or build with a tag for testing
+docker build -t my-actor:test .
+```
+
+This ensures:
+- Dependencies are correctly specified in `pyproject.toml`
+- The `uv.lock` file is up to date and committed
+- The Dockerfile can successfully install all dependencies
+- No build-time errors exist
+
+**If the Docker build fails:**
+1. Check that `uv.lock` exists and is committed
+2. Verify `pyproject.toml` has all required dependencies
+3. Ensure `uv sync` works locally first
+4. Review Dockerfile for any syntax errors
+
 ## Core Concepts
 
 ### Input/Output Pattern
@@ -226,12 +252,13 @@ When modifying an existing actor:
 1. **Understand current logic** - Read `src/main.py`
 2. **Check input schema** - Review `.actor/input_schema.json` for expected inputs
 3. **Add dependencies with uv** - Use `uv add package-name` (NEVER pip install)
-4. **Make code changes** - Implement the requested features
-5. **Format code** - Run `uv run ruff format .` (MANDATORY)
-6. **Lint code** - Run `uv run ruff check --fix .` (MANDATORY)
-7. **Test changes locally** - Use `apify run` before deploying
-8. **Update schema if needed** - Add new fields to input schema
-9. **Deploy** - Push changes with `apify push`
+4. **Verify Docker build** - If dependencies were added, run `docker build .` (MANDATORY)
+5. **Make code changes** - Implement the requested features
+6. **Format code** - Run `uv run ruff format .` (MANDATORY)
+7. **Lint code** - Run `uv run ruff check --fix .` (MANDATORY)
+8. **Test changes locally** - Use `apify run` before deploying
+9. **Update schema if needed** - Add new fields to input schema
+10. **Deploy** - Push changes with `apify push`
 
 ## Creating New Actors - Claude Workflow
 
@@ -239,19 +266,21 @@ When creating a new actor, Claude should follow this workflow:
 
 1. **Copy template** - Use files from `assets/python-template/`
 2. **Add dependencies** - Use `uv add package-name` for each required dependency
-3. **Implement logic** - Write the actor code in `src/main.py`
-4. **Format code** - Run `uv run ruff format .` (MANDATORY before testing)
-5. **Lint code** - Run `uv run ruff check --fix .` (MANDATORY before testing)
-6. **Configure schemas** - Update input/output schemas
-7. **Write documentation** - Create comprehensive `.actor/ACTOR.md`
-8. **Test locally** - Run `apify run` to verify functionality
-9. **Setup pre-commit** - Run `uv run pre-commit install` for automatic quality checks
+3. **Verify Docker build** - Run `docker build .` to ensure Dockerfile builds successfully (MANDATORY)
+4. **Implement logic** - Write the actor code in `src/main.py`
+5. **Format code** - Run `uv run ruff format .` (MANDATORY before testing)
+6. **Lint code** - Run `uv run ruff check --fix .` (MANDATORY before testing)
+7. **Configure schemas** - Update input/output schemas
+8. **Write documentation** - Create comprehensive `.actor/ACTOR.md`
+9. **Test locally** - Run `apify run` to verify functionality
+10. **Setup pre-commit** - Run `uv run pre-commit install` for automatic quality checks
 
 **CRITICAL REMINDERS:**
 - NEVER create `requirements.txt`
 - NEVER use `pip install` or `uv pip install`
 - ALWAYS use `uv add` to add dependencies
 - ALWAYS use `uv sync` to install dependencies
+- ALWAYS verify Docker build after initial creation or adding dependencies
 - ALWAYS format with `uv run ruff format .` before committing/testing
 - ALWAYS lint with `uv run ruff check --fix .` before deploying
 
@@ -276,7 +305,12 @@ When creating a new actor, Claude should follow this workflow:
 - **Timeouts**: Increase timeout or optimize code
 - **Memory errors**: Process in batches, increase memory
 - **Network errors**: Implement retries, use proxies
-- **Build failures**: Check Dockerfile and dependencies
+- **Build failures**:
+  - Verify Docker build locally with `docker build .`
+  - Check that `uv.lock` exists and is committed
+  - Ensure `pyproject.toml` lists all dependencies
+  - Verify `uv sync` works locally
+  - Review Dockerfile syntax and base image compatibility
 
 ## Code Quality & Formatting (MANDATORY)
 
@@ -360,9 +394,10 @@ git commit -m "your message"  # pre-commit runs automatically
 18. **Pre-commit hooks** - Use ruff and pre-commit for consistent code quality (MANDATORY)
 19. **Use uv exclusively** - NEVER use pip or requirements.txt, only `uv sync` (MANDATORY)
 20. **Lock dependencies** - Commit uv.lock for reproducible builds (MANDATORY)
-21. **Test locally** - Always test with `apify run` before deploying
-22. **Dataset schemas** - Define dataset_schema.json with views for better UI
-23. **CLI support** - Add CLI entry points for local testing and development
+21. **Verify Docker build** - Run `docker build .` after creating actor or adding dependencies (MANDATORY)
+22. **Test locally** - Always test with `apify run` before deploying
+23. **Dataset schemas** - Define dataset_schema.json with views for better UI
+24. **CLI support** - Add CLI entry points for local testing and development
 
 ## References
 
