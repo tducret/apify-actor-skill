@@ -30,39 +30,7 @@ Before using this skill, you need:
 
 ## Installation
 
-### Method 1: Download from Releases (Recommended)
-
-1. Go to the [Releases page](https://github.com/tducret/apify-actor-skill/releases)
-2. Download the latest `apify-actor.zip` file
-3. Install in Claude:
-   - Go to [claude.ai](https://claude.ai) or in your Claude desktop app
-   - Navigate to Settings > Capabilities
-   - Click "Upload Skill" or similar option
-   - Select the downloaded `apify-actor.zip` file
-   - Enable the skill in your capabilities list
-
-### Method 2: Build from Source
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/tducret/apify-actor-skill.git
-   cd apify-actor-skill
-   ```
-
-2. Package the skill:
-   ```bash
-   cd apify-actor
-   zip -r ../apify-actor.zip .
-   cd ..
-   ```
-
-3. Install in Claude:
-   - Go to [claude.ai](https://claude.ai)
-   - Navigate to Settings > Capabilities
-   - Upload the `apify-actor.zip` file
-   - Enable the skill
-
-### Method 3: Claude Code CLI
+### Method 1: Local Claude Code
 
 1. Create the skills directory (if it doesn't exist):
    ```bash
@@ -83,6 +51,22 @@ Before using this skill, you need:
 
 The skill will now be available in your Claude Code CLI sessions and will activate automatically when working with Apify-related tasks.
 
+### Method 2: Claude Code in the Cloud
+
+1. (if you want to create an Apify actor from scratch) Create a repo on Github with just the `LICENSE` file (to initialize the `main` branch).
+
+2. Go to [Claude Code](https://claude.ai/code/) and select your Github repo
+
+3. Define the first prompt like so:
+
+   ```txt
+   In this session, we will create an Apify actor that does [INSERT YOUR QUICK DESCRIPTION].
+
+   Before that, let's install "apify-actor" skill.
+   To do that, get the zipped skill in the latest release https://github.com/tducret/apify-actor-skill.
+   Unzip it in /root/.claude/skills and ensure it is successfully loaded.
+   ```
+
 ## How to Use
 
 Once installed, the skill activates automatically when you ask Claude about Apify-related tasks:
@@ -90,39 +74,16 @@ Once installed, the skill activates automatically when you ask Claude about Apif
 ### Creating a New Actor
 
 ```
-Create a new Apify actor that scrapes product listings from e-commerce sites
+Create an Apify actor that can [INSERT YOUR DESCRIPTION].
+
+Inputs:
+- [LIST YOUR INPUTS]
+
+Outputs:
+- [LIST YOUR OUTPUTS]
+
+Ask me if something needs clarification.
 ```
-
-Claude will:
-- Guide you through using `apify create` or copy from templates
-- Set up the proper project structure
-- Implement scraping logic
-- Configure input/output schemas
-- Write marketplace documentation
-
-### Modifying an Existing Actor
-
-```
-Add proxy support and retry logic to my actor
-```
-
-Claude will:
-- Read your existing actor code
-- Implement the requested features
-- Update schemas if needed
-- Test the changes locally
-
-### Debugging Issues
-
-```
-My actor is timing out when scraping large sites. Help me debug this.
-```
-
-Claude will:
-- Analyze your actor code
-- Identify performance bottlenecks
-- Suggest optimizations
-- Implement batching or pagination
 
 ### Deploying Actors
 
