@@ -47,4 +47,4 @@ USER myuser
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Run the actor module
-CMD ["python3", "-m", "src.main"]
+CMD ["python3", "-m", "src"]

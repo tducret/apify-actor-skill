@@ -12,6 +12,6 @@
     "storages": {
         "dataset": "./datasets/dataset_schema.json"
     },
-    "minMemoryMbytes": 256,
+    "minMemoryMbytes": 128,
     "maxMemoryMbytes": 512
 }

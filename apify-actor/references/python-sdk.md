@@ -84,12 +84,6 @@ while request := await queue.fetch_next_request():
 uv add [DEPENDENCY]
 ```
 
-After adding dependencies, verify the Docker build:
-
-```bash
-docker build .
-```
-
 ### Using HTTP Requests (httpx or curl-cffi)
 
 ```python

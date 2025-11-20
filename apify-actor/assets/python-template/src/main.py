@@ -2,7 +2,6 @@
 Apify Actor - Main entry point
 """
 
-import asyncio
 from datetime import UTC, datetime
 
 from apify import Actor
@@ -38,7 +37,3 @@ async def main():
         await Actor.push_data(results)
 
         Actor.log.info(f"Successfully processed {len(results)} items")
-
-
-if __name__ == "__main__":
-    asyncio.run(main())

@@ -55,17 +55,24 @@ The skill will now be available in your Claude Code CLI sessions and will activa
 
 1. (if you want to create an Apify actor from scratch) Create a repo on Github with just the `LICENSE` file (to initialize the `main` branch).
 
-2. Go to [Claude Code](https://claude.ai/code/) and select your Github repo
+2. Go to [Claude Code](https://claude.ai/code/) and select your Github repo.
+
+3. Add a new environment with:
+   - **Complete** network access (adapt depending on the project sensitivity)
+   - Environment variable: `APIFY_TOKEN=[ADD_YOURS]` (create a new token dedicated to Claude Code in [Apify Settings](https://console.apify.com/settings/integrations))
 
 3. Define the first prompt like so:
 
-   ```txt
-   In this session, we will create an Apify actor that does [INSERT YOUR QUICK DESCRIPTION].
+```txt
+In this session, we will create an Apify actor that does [INSERT YOUR QUICK DESCRIPTION].
 
-   Before that, let's install "apify-actor" skill.
-   To do that, get the zipped skill in the latest release https://github.com/tducret/apify-actor-skill.
-   Unzip it in /root/.claude/skills and ensure it is successfully loaded.
-   ```
+Before that, let's install "apify-actor" skill.
+To do that, get the zipped skill in the latest release https://github.com/tducret/apify-actor-skill.
+Unzip it in /root/.claude/skills and ensure it is successfully loaded.
+
+Finally, ensure the skill dependencies are installed and configured.
+Check `apify info` command is successful (or try to login).
+```
 
 ## How to Use
 

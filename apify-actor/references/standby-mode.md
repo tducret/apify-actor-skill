@@ -25,12 +25,6 @@ Standby mode requires the `aiohttp` library for the web server. Add it to your p
 uv add aiohttp
 ```
 
-After adding dependencies, verify the Docker build works:
-
-```bash
-docker build .
-```
-
 ## Basic Implementation
 
 ### Dual-Mode Actor
