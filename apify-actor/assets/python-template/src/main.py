@@ -2,7 +2,8 @@
 Apify Actor - Main entry point
 """
 
-from datetime import datetime, timezone
+import asyncio
+from datetime import UTC, datetime
 
 from apify import Actor
 
@@ -30,7 +31,7 @@ async def main():
         results = []
         for i in range(max_items):
             results.append(
-                {"index": i, "url": start_url, "timestamp": datetime.now(timezone.utc).isoformat()}
+                {"index": i, "url": start_url, "timestamp": datetime.now(UTC).isoformat()}
             )
 
         # Push data to the default dataset
@@ -40,6 +41,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    import asyncio
-
     asyncio.run(main())
